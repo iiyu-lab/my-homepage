@@ -1,8 +1,642 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { achievements } from "../data/achievements";
+
+// 最新の実績を先頭から3件取得
+const recentAchievements = achievements.slice(0, 3);
+
+const trophyIcons: Record<string, string> = {
+  Gold: "🏆",
+  Silver: "🥈",
+  Bronze: "🥉",
+};
+
+// 関連リンク一覧（ここを編集・追加するだけで画面に反映されます）
+const socialLinks = [
+//   {
+//     name: "YouTube",
+//     url: "https://youtube.com",
+//     svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+//     iconBg: "#fee2e2",
+//     iconColor: "#dc2626",
+//     desc: "動画・ライブ配信",
+//   },
+  {
+    name: "X (Twitter)",
+    url: "https://x.com",
+    svg: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+    iconBg: "#f1f5f9",
+    iconColor: "#0f172a",
+    desc: "日常のつぶやき・最新情報",
+  },
+  {
+    name: "note",
+    url: "https://note.com",
+    svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M13.88 4.34c-2.4 0-4.32 1.94-4.32 4.34v.53H6.84a.88.88 0 0 0-.88.88v9.03c0 .49.39.88.88.88h3.33a.88.88 0 0 0 .88-.88V12.1c0-.98.79-1.77 1.77-1.77.97 0 1.76.79 1.76 1.77v7.02c0 .49.4.88.89.88h3.32a.88.88 0 0 0 .89-.88V8.68c0-2.4-1.93-4.34-4.34-4.34z"/></svg>`,
+    iconBg: "#dcfce7",
+    iconColor: "#16a34a",
+    desc: "ブログ・実績の詳細記事",
+  },
+//   {
+//     name: "GitHub",
+//     url: "https://github.com",
+//     svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`,
+//     iconBg: "#f3e8ff",
+//     iconColor: "#7e22ce",
+//     desc: "制作物・ソースコード",
+//   },
+];
 ---
 
 <Layout title="ぐと湯 - ホームページ">
-	<h1>こんにちは、ぐと湯です</h1>
-	<p>楽に生きていきたい</p>
+  <!-- 1. カバーバナー画像エリア（画面全体に広がる！） -->
+  <div class="channel-banner">
+    <div class="banner-gradient"></div>
+    <div class="banner-text">＜ここにタイトルを入力＞</div>
+  </div>
+
+  <!-- 2. 中央揃えコンテナ（プロフィールと最新の更新） -->
+  <div class="container">
+    <!-- プロフィール情報エリア（アバター・名前・説明） -->
+    <div class="profile-area">
+      <!-- アバターアイコン（バナーに少し重なるYouTube風デザイン） -->
+      <div class="avatar-wrap">
+        <img class="avatar" src="/myicon.png" alt="ぐと湯" />
+      </div>
+
+      <!-- チャンネル名・メタ情報 -->
+      <div class="profile-info">
+        <h1 class="channel-title">くくつれ</h1>
+        <div class="channel-meta">
+          <span class="handle">@kukuture</span>
+          <span class="separator">•</span>
+          <span class="sub-count">トロフィー {achievements.length}個獲得</span>
+        </div>
+        <p class="channel-desc">楽に生きたいよ～</p>
+
+        <!-- アクションボタン群 -->
+        <div class="channel-actions">
+          <a href="/achievements" class="btn btn-primary">🏆 実績を見る</a>
+          <a href="/about" class="btn btn-secondary">自己紹介</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 最近の実績セクション -->
+    <section class="achievements-preview">
+      <div class="section-header">
+        <h2 class="section-title">🏆 最近の実績</h2>
+        <a href="/achievements" class="view-all-link"
+          >すべて見る（{achievements.length}件） →</a
+        >
+      </div>
+
+      <div class="log-list">
+        {
+          recentAchievements.map((item) => {
+            const icon = trophyIcons[item.rank] || "🏅";
+            const hasLink = Boolean(item.url && item.url.trim() !== "");
+            const rankLower = item.rank.toLowerCase();
+
+            return (
+              <a
+                href={item.url || "/achievements"}
+                class={`log-item rank-${rankLower}`}
+                target={hasLink ? "_blank" : "_self"}
+                rel={hasLink ? "noopener noreferrer" : undefined}
+              >
+                <div class="log-left">
+                  <span class="log-date">{item.date}</span>
+                  <span class="log-icon">{icon}</span>
+                  <span class="log-genre">{item.genre}</span>
+                </div>
+
+                <div class="log-center">
+                  <span class="log-title">{item.title}</span>
+                </div>
+
+                <div class="log-right">
+                  <span class="log-rank">{item.rank}</span>
+                  <span class="log-arrow">{hasLink ? "↗" : "→"}</span>
+                </div>
+              </a>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- 4. 最新の更新エリア -->
+    <section class="recent-section">
+      <h2 class="section-title">最新の更新</h2>
+      <p class="section-desc">
+        ホームページをリニューアルしました！上のメニューやボタンから実績一覧ページを見ることができます。
+      </p>
+    </section>
+
+    <!-- 5. 関連リンクセクション -->
+    <section class="links-section">
+      <h2 class="section-title">🔗 関連リンク</h2>
+      <div class="links-grid">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.url}
+              class="link-card"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div
+                class="link-icon-wrap"
+                style={`background-color: ${link.iconBg}; color: ${link.iconColor};`}
+              >
+                <Fragment set:html={link.svg} />
+              </div>
+              <div class="link-info">
+                <span class="link-name">{link.name}</span>
+                <span class="link-desc">{link.desc}</span>
+              </div>
+              <span class="link-arrow">↗</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
 </Layout>
+
+<style>
+  /* ===================================================
+	   YouTube風バナーのスタイル
+	   =================================================== */
+
+  .channel-container {
+    margin-bottom: 2rem;
+  }
+
+  /* 横長バナーエリア */
+  .channel-banner {
+    width: 100%;
+    /* 画面幅に応じて綺麗に比率を保つ（横16 : 縦4.5） */
+    aspect-ratio: 16 / 4.5;
+    min-height: 140px;
+    max-height: 240px;
+    /* border-radius: 12px; */
+    position: relative;
+    overflow: hidden;
+
+    /* 画像がない場合のスタイリッシュなグラデーション背景 */
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #312e81 100%);
+
+    /* 自分の画像を使いたい場合は、以下のようにコメントアウトを解除します */
+    /* background-image: url('/banner.jpg'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* バナー上のテクスチャ・装飾 */
+  .banner-gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 80% 20%,
+      rgba(99, 102, 241, 0.25),
+      transparent 60%
+    );
+  }
+
+  .banner-text {
+    position: relative;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.15);
+    user-select: none;
+  }
+
+  /* ===================================================
+	   プロフィール・チャンネル情報エリア
+	   =================================================== */
+  .profile-area {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  /* アバターアイコン（バナーに重なるYouTube特有の配置） */
+  .avatar-wrap {
+    margin-top: -45px; /* 上に引っ張り上げてバナーに重ねる！ */
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 0%;
+    background: linear-gradient(
+      135deg,
+      #e60012 0%,
+      #ff4757 100%
+    ); /* YouTube・UUUM風レッド */
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* アバターの周りの白いフチ取り */
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* チャンネルテキスト情報 */
+  .profile-info {
+    flex: 1;
+    padding-top: 0.75rem;
+    min-width: 260px;
+  }
+
+  .channel-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+  }
+
+  .channel-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+  }
+
+  .channel-meta .handle {
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .channel-desc {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  /* ボタン */
+  .channel-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px; /* YouTube風の丸みを帯びたピル型ボタン */
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background-color: #0f172a;
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: #334155;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+  }
+
+  .btn-secondary:hover {
+    background-color: #e2e8f0;
+  }
+
+  /* ===================================================
+     最近の実績プレビューセクション
+     =================================================== */
+  .achievements-preview {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .view-all-link {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #e60012;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .view-all-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  /* ===================================================
+     ログ形式のリストスタイル（1行ずつ縦並び）
+     =================================================== */
+  .log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .log-item {
+    background-color: #f4f6f8; /* ページの背景色と同じに設定 */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-left: 4px solid transparent; /* 左側にランク別のアクセントバー */
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  /* ホバーで白くなって少し右にスライド */
+  .log-item:hover {
+    transform: translateX(6px);
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /* ランク別装飾（左バー） */
+  .log-item.rank-gold {
+    border-left-color: #f59e0b;
+  }
+  .log-item.rank-gold:hover {
+    border-color: #f59e0b;
+  }
+
+  .log-item.rank-silver {
+    border-left-color: #94a3b8;
+  }
+  .log-item.rank-silver:hover {
+    border-color: #94a3b8;
+  }
+
+  .log-item.rank-bronze {
+    border-left-color: #d97706;
+  }
+  .log-item.rank-bronze:hover {
+    border-color: #d97706;
+  }
+
+  /* ログ左側（日付・アイコン・ジャンル） */
+  .log-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .log-date {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+  }
+
+  .log-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .log-genre {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    background: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  /* ログ中央（実績タイトル） */
+  .log-center {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .log-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b; /* 読みやすい濃い文字色に変更 */
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 長いタイトルは ... で省略 */
+  }
+
+  /* ログ右側（ランク名・矢印） */
+  .log-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .log-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+
+  .log-arrow {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .log-item:hover .log-arrow {
+    color: #1e293b;
+    transform: translateX(3px);
+  }
+
+  /* スマホなど幅が狭い画面でのレイアウト */
+  @media (max-width: 600px) {
+    .log-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 14px;
+    }
+
+    .log-title {
+      white-space: normal;
+    }
+
+    .log-right {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  /* 下部セクション */
+  /* 最新の更新セクション */
+  .recent-section {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1e293b;
+  }
+
+  .section-desc {
+    color: #64748b;
+    font-size: 0.95rem;
+  }
+
+  /* ===================================================
+     関連リンクセクション
+     =================================================== */
+  .links-section {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 2rem;
+    margin-top: 2rem;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+  }
+
+  .link-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .link-card:hover {
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .link-icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .link-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .link-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+  }
+
+  .link-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .link-arrow {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #94a3b8;
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .link-card:hover .link-arrow {
+    color: #0f172a;
+    transform: translate(2px, -2px);
+  }
+
+  /* スマホ表示用の微調整（画面幅が狭いとき） */
+  @media (max-width: 600px) {
+    .profile-area {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar-wrap {
+      margin-top: -50px;
+    }
+
+    .channel-meta {
+      justify-content: center;
+    }
+
+    .channel-actions {
+      justify-content: center;
+    }
+  }
+</style>
