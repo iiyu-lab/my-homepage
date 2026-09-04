@@ -30,6 +30,12 @@ const illustrationProgressList = [
     currentTask: "読み直しながら書く",
     percentage: 50,
     comment: "まだまだ理解できてない",
+  },
+  {
+    title: "研究室調べ",
+    currentTask: "4/254",
+    percentage: 2,
+    comment: "ちゃんと調べる",
   }
 ];
 
@@ -186,6 +192,42 @@ const socialLinks = [
       </div>
     </section>
 
+    <!-- 夏休みカウントダウンセクション -->
+    <section class="countdown-section">
+      <div class="countdown-card">
+        <div class="countdown-header">
+          <div class="countdown-title-wrap">
+            <span class="countdown-badge">⏳ COUNTDOWN</span>
+            <h2 class="countdown-title">夏休み終了まで</h2>
+          </div>
+          <span class="countdown-target">2026.09.30 23:59 まで</span>
+        </div>
+
+        <div id="countdown-container" class="countdown-boxes">
+          <div class="countdown-box">
+            <span id="cd-days" class="cd-number">--</span>
+            <span class="cd-label">DAYS</span>
+          </div>
+          <div class="countdown-box">
+            <span id="cd-hours" class="cd-number">--</span>
+            <span class="cd-label">HOURS</span>
+          </div>
+          <div class="countdown-box">
+            <span id="cd-minutes" class="cd-number">--</span>
+            <span class="cd-label">MINUTES</span>
+          </div>
+          <div class="countdown-box">
+            <span id="cd-seconds" class="cd-number">--</span>
+            <span class="cd-label">SECONDS</span>
+          </div>
+        </div>
+
+        <p class="countdown-message">
+          ☀️ 残りわずかな夏休み、悔いのないように楽しもう！
+        </p>
+      </div>
+    </section>
+
     <!-- 4. 最新の更新エリア -->
     <section class="recent-section">
       <h2 class="section-title">最新の更新</h2>
@@ -224,6 +266,49 @@ const socialLinks = [
     </section>
   </div>
 </Layout>
+
+<script>
+  // 夏休み終了日時：2026年9月30日 23:59:59
+  const targetDate = new Date("2026-09-30T23:59:59").getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    const daysEl = document.getElementById("cd-days");
+    const hoursEl = document.getElementById("cd-hours");
+    const minutesEl = document.getElementById("cd-minutes");
+    const secondsEl = document.getElementById("cd-seconds");
+    const container = document.getElementById("countdown-container");
+
+    // 期限を過ぎた場合の処理
+    if (distance < 0) {
+      if (container) {
+        container.innerHTML =
+          "<p style='grid-column: 1 / -1; text-align: center; font-weight: 700; color: #e60012; padding: 12px;'>🎉 夏休み終了！新学期もがんばろう！</p>";
+      }
+      return;
+    }
+
+    // 残り日数・時間・分・秒の計算
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // 画面の数字を更新
+    if (daysEl) daysEl.textContent = String(days);
+    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
+    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, "0");
+    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, "0");
+  }
+
+  // 初回実行 ＆ 1秒ごとに更新
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 
 <style>
   /* ===================================================
@@ -797,6 +882,103 @@ const socialLinks = [
     font-size: 0.85rem;
     color: #64748b;
     line-height: 1.4;
+  }
+
+  /* ===================================================
+     夏休みカウントダウンセクション
+     =================================================== */
+  .countdown-section {
+    margin-top: 2rem;
+  }
+
+  .countdown-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .countdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .countdown-title-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .countdown-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ea580c;
+    background: #ffedd5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .countdown-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .countdown-target {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 700;
+  }
+
+  .countdown-boxes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .countdown-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cd-number {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
+  }
+
+  .cd-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .countdown-message {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+    text-align: center;
   }
 
   /* スマホ表示用の微調整（画面幅が狭いとき） */
