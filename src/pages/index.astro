@@ -11,7 +11,10 @@ const trophyIcons: Record<string, string> = {
   Bronze: "🥉",
 };
 
-const kenkyu_p = 5/254*100;
+// 研究室調べの進捗計算（調べた件数を書き換えるだけで、%とバーが自動計算されます）
+const kenkyu_done = 5;
+const kenkyu_total = 254;
+const kenkyu_p = Math.round((kenkyu_done / kenkyu_total) * 100); // 割合をパーセントにして四捨五入（約2%）
 
 // イラスト進捗データ（配列 [] にすることで、いくつでも増やせます！）
 const illustrationProgressList = [
@@ -35,8 +38,8 @@ const illustrationProgressList = [
   },
   {
     title: "研究室調べ",
-    currentTask: kenkyu_p,
-    percentage: `${Math.round(kenkyu_p)}%`,
+    currentTask: `${kenkyu_done}/${kenkyu_total}`,
+    percentage: kenkyu_p, // ← kenkyu_p変数を指定！
     comment: "ちゃんと調べる",
   }
 ];
