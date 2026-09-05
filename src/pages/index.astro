@@ -25,14 +25,14 @@ const illustrationProgressList = [
     comment: "なに描こうかね",
   },
   {
-    title: "本の感想1",
-    currentTask: "読み直しながら書く",
+    title: "哲学本",
+    currentTask: "次の本",
     percentage: 50,
-    comment: "まだ理解できてない",
+    comment: "多少は理解した",
   },
   {
-    title: "本の感想2",
-    currentTask: "読み直しながら書く",
+    title: "政治本",
+    currentTask: "次の本",
     percentage: 50,
     comment: "まだまだ理解できてない",
   },
@@ -41,7 +41,19 @@ const illustrationProgressList = [
     currentTask: `${kenkyu_done}/${kenkyu_total}`,
     percentage: kenkyu_p, // ← kenkyu_p変数を指定！
     comment: "ちゃんと調べる",
-  }
+  },
+  {
+    title: "本の感想3",
+    currentTask: "まだはじめの方",
+    percentage: 5, // ← kenkyu_p変数を指定！
+    comment: "タスク多いな",
+  },
+  {
+    title: "線形問題集",
+    currentTask: "一次方程式",
+    percentage: 5, // 
+    comment: "タスク多いな",
+  },
 ];
 
 // 関連リンク一覧（ここを編集・追加するだけで画面に反映されます）
@@ -101,7 +113,7 @@ const socialLinks = [
       <div class="profile-info">
         <h1 class="channel-title">くくつれ</h1>
         <div class="channel-meta">
-          <span class="handle">@kukuture</span>
+          <span class="handle">@konosaitohadaitaiAItopakuri</span>
           <span class="separator">•</span>
           <span class="sub-count">トロフィー {achievements.length}個獲得</span>
         </div>
@@ -237,7 +249,7 @@ const socialLinks = [
     <section class="recent-section">
       <h2 class="section-title">最新の更新</h2>
       <p class="section-desc">
-        ホームページをリニューアルしました！上のメニューやボタンから実績一覧ページを見ることができます。
+        上のメニューやボタンから実績一覧ページを見ることができるよ。
       </p>
     </section>
 
